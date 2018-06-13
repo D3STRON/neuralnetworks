@@ -21,7 +21,7 @@ class Matrix{
         {
             for(let j=0;j<this.cols;j++)
             {
-                this.data[i][j]=Math.floor(Math.random()*10);
+                this.data[i][j]=Math.random()*2-1;//to get a negative number between -1 and 1
             }
         }
     }
@@ -44,6 +44,29 @@ class Matrix{
             return undefined
         }
     }
+    add(A)
+    {
+        if(A.rows===this.rows && A.cols===this.cols){
+            for(let i=0;i<this.rows;i++)
+            {
+                for(let j=0;j<this.cols;j++)
+                {
+                    this.data[i][j]+=A.data[i][j];
+                }
+            }
+        }
+    }
+    
+    static fromArray(arr)
+    {
+        let m= new Matrix(arr.length,1)
+        for(let i=0;i<arr.length;i++)
+        {
+            m.data[i][0]=arr[i]
+        }
+        return m
+    }
+
     static multiply(A,B)
     {
         if (A.cols!== B.rows){
@@ -64,6 +87,20 @@ class Matrix{
         }
         return C
     }
+
+    toArray()
+    {
+        let B=[]
+        for(let i=0;i<this.rows;i++)
+        {
+            for(let j=0;j<this.cols;j++)
+            {
+                B.push(this.data[i][j]);
+            }
+        }
+        return B
+    }
+
     map(func)
     {
         for(let i=0;i<this.rows;i++)
