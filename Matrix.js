@@ -21,11 +21,11 @@ class Matrix{
         {
             for(let j=0;j<this.cols;j++)
             {
-                this.data[i][j]=Math.random()*2-1;//to get a small number between -1 and 1
+                this.data[i][j]=Math.random()*2-1//to get a small number between -1 and 1
             }
         }
     }
-    static subract(A,B)
+    static subtract(A,B)
     {
         if(A.cols===B.cols && A.rows===B.rows)
         {

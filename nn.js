@@ -13,7 +13,7 @@ class NeuralNetwork{
         this.bias_h.randomize()
         this.bias_o=new Matrix(this.output_nodes,1)
         this.bias_o.randomize()
-        this.learning_rate= 0.01
+        this.learning_rate= 0.1
     }
 
     feedforward(input_array)
@@ -33,10 +33,10 @@ class NeuralNetwork{
 
     train(input_array,target_array)
     {
-        let outputs=this.feedforward(input_array)
+        let outputs=this.feedforward(input_array)        
         let targets=Matrix.fromArray(target_array)
-        let output_errors = Matrix.subract(targets,outputs)//error to determine cost function
-        console.log(output_errors.data[0][0]*output_errors.data[0][0])
+        let output_errors = Matrix.subtract(targets,outputs)//error to determine cost function
+        //console.log(output_errors.data[0][0]*output_errors.data[0][0])
 
         //Calculate gradient for hidden to output
         let gradients= Matrix.map(outputs,dsigmoid)// derivative for activation function output elements are now oi(1+oi)
@@ -63,8 +63,6 @@ class NeuralNetwork{
          
         this.weight_ih.add(deltas_weight_ih)// finally adjusting the weights
         this.bias_h.add(hidden_gradients)   // finally adjusting biases for hidden layer
-
-        return hidden_error
     }
 }
 
@@ -75,7 +73,7 @@ function sigmoid(x)
 
 function dsigmoid(y)
 {
-    return y/(1+y)
+    return y*(1-y)
 }
 
 function square(x)
