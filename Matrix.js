@@ -21,8 +21,26 @@ class Matrix{
         {
             for(let j=0;j<this.cols;j++)
             {
-                this.data[i][j]=Math.random()*2-1;//to get a negative number between -1 and 1
+                this.data[i][j]=Math.random()*2-1;//to get a small number between -1 and 1
             }
+        }
+    }
+    static subract(A,B)
+    {
+        if(A.cols===B.cols && A.rows===B.rows)
+        {
+            var C= new Matrix(A.rows,B.cols)
+            for(let i=0;i<A.rows;i++)
+            {
+                for(let j=0;j<A.cols;j++)
+                {
+                    C.data[i][j]=A.data[i][j]-B.data[i][j];
+                }
+            }  
+            return C 
+        }
+        else{
+            console.log("A and B have different structure")
         }
     }
     static transpose(A)
@@ -87,7 +105,6 @@ class Matrix{
         }
         return C
     }
-
     toArray()
     {
         let B=[]
@@ -108,6 +125,40 @@ class Matrix{
             for(let j=0;j<this.cols;j++)
             {
                 this.data[i][j]=func(this.data[i][j]);
+            }
+        }
+    }
+    static map(A,func)
+    {
+        if(A instanceof Matrix){
+            for(let i=0;i<A.rows;i++)
+            {
+                for(let j=0;j<A.cols;j++)
+                {
+                    A.data[i][j]=func(A.data[i][j]);
+                }
+            }
+            return A
+        }
+    }
+    multiply(A)
+    {
+        if(A instanceof Matrix){
+            for(let i=0;i<A.rows;i++)
+            {
+                for(let j=0;j<A.cols;j++)
+                {
+                    this.data[i][j]*=A.data[i][j];
+                }
+            }
+        }
+        else{
+            for(let i=0;i<this.rows;i++)
+            {
+                for(let j=0;j<this.cols;j++)
+                {
+                    this.data[i][j]*=A;
+                }
             }
         }
     }
