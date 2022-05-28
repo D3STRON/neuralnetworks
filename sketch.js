@@ -19,8 +19,8 @@ let training_data=[
 function init()
 {
 
-    let nn = new NeuralNetwork(2,2,1)
-    for(let i=0;i<50000;i++)
+    let nn = new NeuralNetwork([2,2,1])
+    for(let i=0;i<500000;i++)
     {
         let data= training_data[Math.floor(Math.random() * training_data.length)];
         //for(data of training_data){
