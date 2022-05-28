@@ -13,6 +13,8 @@ class NeuralNetwork{
             this.biases[i].randomize();
         }
         this.learning_rate= 0.1
+        this.activation = sigmoid
+        this.delta_activation= dsigmoid
     }
 
     feedforward(input_array)
@@ -23,7 +25,7 @@ class NeuralNetwork{
         {
             this.layer.push(Matrix.multiply(this.weights[i],this.layer[i]));
             this.layer[i+1].add(this.biases[i]);//output of the weighted sum plus bias
-            this.layer[i+1].map(sigmoid);// finally pass that layer outputs at every layer node through the activation function to get the layers final output
+            this.layer[i+1].map(this.activation);// finally pass that layer outputs at every layer node through the activation function to get the layers final output
         }
         return this.layer[this.layer.length-1];
     }
@@ -36,7 +38,7 @@ class NeuralNetwork{
         //console.log(output_errors.data[0][0]*output_errors.data[0][0])
 
         //Calculate gradient for hidden to output
-        let gradients= Matrix.map(outputs,dsigmoid)// derivative for activation function output elements are now oi(1+oi)
+        let gradients= Matrix.map(outputs,this.delta_activation)// derivative for activation function output elements are now oi(1+oi)
 
         for(let i=this.layer.length-2;i>=0;i--)
         {
@@ -49,7 +51,7 @@ class NeuralNetwork{
             if(i>0)
             {
                 errors= Matrix.multiply(Matrix.transpose(this.weights[i]),errors);
-                gradients= Matrix.map(this.layer[i],dsigmoid);
+                gradients= Matrix.map(this.layer[i],this.delta_activation);
             }
         }
     }
@@ -77,7 +79,7 @@ class NeuralNetwork{
 
 function sigmoid(x)
 {
-    return 1/(1+Math.exp(-x))
+   return 1/(1+Math.exp(-x))
 }
 
 function dsigmoid(y)
@@ -85,7 +87,32 @@ function dsigmoid(y)
     return y*(1-y)
 }
 
-function square(x)
+function tanh(x)
 {
-    return x*x
+    return Math.tanh(x)
+}
+
+function dtanh(y)
+{
+    return 1-y*y
+}
+
+function taninv(x)
+{
+    return Math.atan(x)
+}
+
+function dtaninv(y)
+{
+    return 1/(1+y*y)
+}
+
+function reLU(x)
+{
+    if(x>=0)
+    {
+        return x
+
+    }
+    return 0
 }
