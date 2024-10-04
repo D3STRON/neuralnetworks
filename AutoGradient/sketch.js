@@ -25,10 +25,10 @@ function generateLearnableDataset(num_samples, num_features= 3) {
     return { data, labels };
 }
 
-function train(num_samples, layer_sizes = [4, 5 ,1], lr = 0.005, iterations = 1000) {
+function train(num_samples, layer_sizes = [4, 4, 1], lr = 0.006, iterations = 1000) {
     const {data, labels} = generateLearnableDataset(num_samples)
     console.log(data)
-    var model = new MLP(data[0].length, layer_sizes)
+    var model = new MLP(data[0].length, layer_sizes, ['relU', 'relU','tanh'])
 
     for(let i =0; i < iterations; i++) {
         let outputs = Array.from({ length: data.length }, (_, i) => (model.forward(data[i])));

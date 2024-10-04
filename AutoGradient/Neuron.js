@@ -22,6 +22,6 @@ class Neuron{
             throw new Error('Input vector length must match the number of neuron weights.');
         }
         let result = this.weights.reduce((sum, weight, i) => sum.add(weight.mul(x[i])), this.bias);
-        return result.tanh();
+        return result;
     }
 }

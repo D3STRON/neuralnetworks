@@ -1,8 +1,8 @@
-
 class Layer {
-    constructor(num_in, num_o) {
+    constructor(num_in, num_o, act_func) {
         this.num_in = num_in
         this.neurons = Array.from({ length: num_o }, () => new Neuron(num_in));
+        this.act_func = Array.from({ length: num_o }, () => new Activation(act_func));
     }
     
     parameters() {
@@ -16,7 +16,8 @@ class Layer {
     }
 
     forward(x) {
-        const outs = this.neurons.map(neuron => neuron.forward(x));
+        var logits = this.neurons.map(neuron => neuron.forward(x));
+        const outs = Array.from({ length: this.act_func.length }, (_, i) => (this.act_func[i].activate(logits[i])));
         return outs
     }
 }

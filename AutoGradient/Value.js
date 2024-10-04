@@ -55,6 +55,15 @@ class Value {
   
           return out;  // Return the result Value
       }
+
+      relU() {
+        const out = new Value(Math.max(this.data, 0), [this], 'relU')
+        
+        out._backward = () => {
+             this.grad += (this.data > 0) ? out.grad : 0;
+        };
+        return out
+    }
       
       exp() {
           // Compute exponentiation
